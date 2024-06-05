@@ -5,9 +5,10 @@ import time
 
 
 class audio_matching():
-    def __init__(self, volume_threshold, monitor):
+    def __init__(self, volume_threshold, monitor, max_wait_second):
         self.volume_threshold = volume_threshold
         self.monitor = monitor
+        self.max_wait_second = max_wait_second
         self.st = sd.Stream(callback=self.print_sound)
 
     def print_sound(self, indata, outdata, frames, time, status):
@@ -19,6 +20,7 @@ class audio_matching():
         if(volume > self.volume_threshold):
             self.fish_action()
             self.st.stop()
+            print('Audio capture process stopped..')
 
     def get_stream(self):
         return self.st
@@ -26,20 +28,22 @@ class audio_matching():
     def set_action_when_getting_fish(self, fish_action):
         self.fish_action = fish_action
 
-    def sound_capture(self, max_wait_second):    
-        time.sleep(2)
-        
+    def sound_capture(self):
+        print('Initialise SD stream...')
+        self.st = sd.Stream(callback=self.print_sound)        
         self.st.start()
-        print('Audio capture process started')
-        #print(sd.default.device)
+        print('Audio capture process started...')       
         
         i = 0
         while self.st.active:
             sd.sleep(1000)
             i = i + 1
-            if i > max_wait_second:
+            if i > self.max_wait_second:
                 print('Reached maximum wait second, stopped audio capture and give up fishing')
                 self.st.stop()
+                print('Audio capture process stopped..')
                 break
         
-        print('Audio capture process stopped')
+        # re-initialise sd stream
+        self.st.close()
+        print('SD stream closed..')

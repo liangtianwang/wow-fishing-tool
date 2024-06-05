@@ -13,19 +13,20 @@ sound_path = './soundID'
 coordinate = 0.69  #数值越高越难定位但是越准确
 retry = 25
 volume_threshold = 30
+max_wait_second = 15
 enable_volume_monitor = False
 
+ami = am.audio_matching(volume_threshold, enable_volume_monitor, max_wait_second)
+ami.set_action_when_getting_fish(
+    lambda: (
+        ag.rightClick(),
+        print('###########CAUGHT FISH!!!!#############')))
 
-
-ami = am.audio_matching(volume_threshold, enable_volume_monitor)
-ami.set_action_when_getting_fish(lambda: {ag.rightClick()})
-st = ami.get_stream()
 
 while(True):
-    st.start()
+    st = ami.get_stream()
     print("Sleep 2 seconds before previous fishing icon disappears")
     time.sleep(2)
-    st.stop()
 
     print("Start to capture fishing icon position")
     fish_position = im.locate_image(image_path, fishing_icons, coordinate,retry)
@@ -38,7 +39,7 @@ while(True):
             print('incorrect mouse move')
         else:			
             print("Moved to fishing icon position")
-            ami.sound_capture(volume_threshold)
+            ami.sound_capture()
 
     print("Cast to fish for next round...")
     print("------------------------------")
