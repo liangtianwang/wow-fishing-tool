@@ -7,7 +7,7 @@ import numpy as np
 
 record_path = './recrod'
 image_path = './imgID/default'
-fishing_icons= ['fishingFloatImgStd.bmp']
+fishing_icons= ['float_1.jpg']
 sound_path = './soundID'
 
 max_round = 300
