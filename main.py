@@ -10,6 +10,7 @@ image_path = './imgID/default'
 fishing_icons= ['fishingFloatImgStd.bmp']
 sound_path = './soundID'
 
+max_round = 300
 coordinate = 0.69  #数值越高越难定位但是越准确
 retry = 25
 volume_threshold = 30
@@ -22,8 +23,8 @@ ami.set_action_when_getting_fish(
         ag.rightClick(),
         print('###########CAUGHT FISH!!!!#############')))
 
-
-while(True):
+round = 1
+while(round < max_round):
     st = ami.get_stream()
     print("Sleep 2 seconds before previous fishing icon disappears")
     time.sleep(2)
@@ -43,6 +44,8 @@ while(True):
 
     print("Cast to fish for next round...")
     print("------------------------------")
-    print("##########New Round##########")
+    print(f"###### New Round ({round}/{max_round})#####")
     print("------------------------------")
     ag.press('1')
+
+    round = round + 1

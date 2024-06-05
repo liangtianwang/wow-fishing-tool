@@ -1,14 +1,16 @@
 1. Install Python3 https://www.python.org/downloads/
-2. Install the following python libraries
-
+2. Install `pip`
+3. Install the following python libraries
 ```
-py -m pip install sounddevice
-py -m pip install pyautogui
-py -m pip install numpy
-py -m pip install opencv_python
+pip install sounddevice
+pip install pyautogui
+pip install numpy
+pip install Pillow
+pip install matplotlib
+pip install opencv_python
+pip install opencv-contrib-python
 ```
 
-3. Install VoicemeeterSetup_v2058
-
-4. Open WOW, set audio output using VoiceMeeter Input
-5. Change System Output default to VoiceMeeter Input
+4. Install VoicemeeterSetup_v2058
+5. Open WOW, set audio output using VoiceMeeter Input
+6. Change System Output default to VoiceMeeter Input
