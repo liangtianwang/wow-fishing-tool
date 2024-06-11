@@ -7,15 +7,15 @@ import numpy as np
 
 record_path = './recrod'
 image_path = './imgID/default'
-fishing_icons= ['fishingFloatImgStd.bmp']
+fishing_icons= r'fishingFloatImgStd.'
 sound_path = './soundID'
 
 max_round = 300
-coordinate = 0.69  #数值越高越难定位但是越准确
-retry = 25
+coordinate = 0.65  #数值越高越难定位但是越准确
+retry = 5
 volume_threshold = 30
 max_wait_second = 15
-enable_volume_monitor = False
+enable_volume_monitor = True
 
 ami = am.audio_matching(volume_threshold, enable_volume_monitor, max_wait_second)
 ami.set_action_when_getting_fish(
@@ -25,9 +25,11 @@ ami.set_action_when_getting_fish(
 
 round = 1
 while(round < max_round):
-    st = ami.get_stream()
+    st = ami.get_stream_without_callback()
+    st.start()
     print("Sleep 2 seconds before previous fishing icon disappears")
     time.sleep(2)
+    st.stop()
 
     print("Start to capture fishing icon position")
     fish_position = im.locate_image(image_path, fishing_icons, coordinate,retry)

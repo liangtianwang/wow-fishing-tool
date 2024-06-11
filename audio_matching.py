@@ -2,8 +2,6 @@ import sounddevice as sd
 import numpy as np
 import time
 
-
-
 class audio_matching():
     def __init__(self, volume_threshold, monitor, max_wait_second):
         self.volume_threshold = volume_threshold
@@ -25,12 +23,14 @@ class audio_matching():
     def get_stream(self):
         return self.st
     
+    def get_stream_without_callback(self):
+        return sd.Stream()
+    
     def set_action_when_getting_fish(self, fish_action):
         self.fish_action = fish_action
 
     def sound_capture(self):
-        print('Initialise SD stream...')
-        self.st = sd.Stream(callback=self.print_sound)        
+        print('Initialise SD stream...')      
         self.st.start()
         print('Audio capture process started...')       
         
@@ -43,7 +43,3 @@ class audio_matching():
                 self.st.stop()
                 print('Audio capture process stopped..')
                 break
-        
-        # re-initialise sd stream
-        self.st.close()
-        print('SD stream closed..')
